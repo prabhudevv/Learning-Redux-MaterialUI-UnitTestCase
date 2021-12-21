@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { SPACING } from './constants/styleGuide';
 import { PRIMARY_PURPLE } from './constants/colors';
 import { PROJECT_TITLE } from './constants/constants';
+import Navigation from './components/Navigation/Navigation';
 
 const useStyles = makeStyles({
   projectTitle: {
@@ -16,9 +17,11 @@ function App() {
 
   return (
     <>
-      <p className={classes.projectTitle}>
-        {PROJECT_TITLE}
-      </p>
+      <Navigation>
+        <p className={classes.projectTitle}>
+          {PROJECT_TITLE}
+        </p>
+      </Navigation>
     </>
   );
 }
