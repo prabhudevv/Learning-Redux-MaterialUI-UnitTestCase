@@ -1,0 +1,5 @@
+{
+	"local": {
+		"USER_SERVICE": "http://localhost:3001"
+	}
+}
