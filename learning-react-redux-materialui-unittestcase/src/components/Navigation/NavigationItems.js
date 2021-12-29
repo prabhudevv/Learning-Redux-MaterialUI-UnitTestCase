@@ -1,14 +1,7 @@
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import AccessAlarm from '@mui/icons-material/AccessAlarm';
-import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 export const items = [
-	{ label: 'Inbox', icon: <InboxIcon size="mediun" />, path: '/', aboveBreaker: true },
-	{ label: 'Starred', icon: <MailIcon size="mediun" />, path: '/', aboveBreaker: true },
-	{ label: 'Send email', icon: <AccessAlarm size="mediun" />, path: '/', aboveBreaker: true },
-	{ label: 'Drafts', icon: <ThreeDRotation size="mediun" />, path: '/', aboveBreaker: true },
-	{ label: 'All mail', icon: <InboxIcon size="mediun" />, path: '/', aboveBreaker: false },
-	{ label: 'Trash', icon: <MailIcon size="mediun" />, path: '/', aboveBreaker: false },
-	{ label: 'Spam', icon: <InboxIcon size="mediun" />, path: '/', aboveBreaker: false }
+	{ label: 'Home', icon: <HomeIcon size="medium" />, path: '/', aboveBreaker: true },
+	{ label: 'Add User', icon: <PersonAddIcon size="medium" />, path: '/adduser', aboveBreaker: true }
 ];

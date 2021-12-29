@@ -5,6 +5,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Link } from "react-router-dom";
 
 import {
 	Box,
@@ -105,12 +106,14 @@ export default function MiniDrawer(props) {
 	};
 
 	const createItem = (value, index) => (
-		<ListItem button key={index}>
-			<ListItemIcon>
-				{value.icon}
-			</ListItemIcon>
-			<ListItemText primary={value.label} />
-		</ListItem>
+		<Link to={value.path}>
+			<ListItem button key={index}>
+				<ListItemIcon>
+					{value.icon}
+				</ListItemIcon>
+				<ListItemText primary={value.label} />
+			</ListItem>
+		</Link>
 	);
 
 	const navigationItemsAbove = [];

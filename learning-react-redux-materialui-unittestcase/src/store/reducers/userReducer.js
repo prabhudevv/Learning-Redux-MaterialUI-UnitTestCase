@@ -1,9 +1,7 @@
 import types from "../types/userActionTypes";
 
 const initialState = {
-	userData: {
-		users: []
-	}
+	userData: []
 }
 
 const userReducer = (state = initialState, action) => {
@@ -12,6 +10,20 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				userData: action.payload
+			}
+		case types.SET_INPUT_VALUE:
+			const { name, value } = action.payload;
+			return {
+				...state,
+				userData: {
+					...state.userData,
+					[name]: value
+				}
+			}
+		case types.RESET_USER_DATA:
+			return {
+				...state,
+				userData: initialState.userData
 			}
 		default:
 			return state;
