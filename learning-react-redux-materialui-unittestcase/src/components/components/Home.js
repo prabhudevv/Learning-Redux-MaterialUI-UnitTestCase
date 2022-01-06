@@ -3,10 +3,28 @@ import { SPACING } from "../../constants/styleGuide";
 import { PRIMARY_PURPLE } from "../../constants/colors";
 import { PROJECT_TITLE } from "../../constants/constants";
 import { useEffect } from "react";
-import { getService } from "../../axios/axios";
+import { getService, deleteService } from "../../axios/axios";
 import { setUserData } from "../../store/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
-import { DataGrid } from "@mui/x-data-grid";
+
+// MUI Icons
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
+
+// MUI Components
+import {
+  Button,
+  ButtonGroup,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 
 const useStyles = makeStyles({
   projectTitle: {
@@ -22,22 +40,25 @@ const Home = () => {
 
   const allUsers = useSelector((state) => state.user.userData);
 
-  const columns = [
-    { field: "id", headerName: "ID", width: 70, sortable: true },
-    { field: "title", headerName: "Title", width: 130, sortable: false },
-    { field: "author", headerName: "Author", width: 130, sortable: false },
-  ];
-
   allUsers.map((item, idx) => {
     rows.push({
       title: item.title,
       author: item.author,
       id: item.id,
-      uniqueKey: item.id,
     });
   });
 
-  useEffect(() => {
+  const deleteUser = (id) => {
+    deleteService("USER_SERVICE", `/users/${id}`)
+      .then((res) => {
+        getAllUsers();
+      })
+      .catch((err) => {
+        console.log("deleted fail");
+      });
+  };
+
+  const getAllUsers = () => {
     getService("USER_SERVICE", "/users")
       .then((res) => {
         dispatch(setUserData(res.data));
@@ -45,21 +66,57 @@ const Home = () => {
       .catch((err) => {
         dispatch(setUserData(err));
       });
+  };
+
+  useEffect(() => {
+    getAllUsers();
   }, []);
 
   return (
     <>
       <p className={classes.projectTitle}>{PROJECT_TITLE}</p>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          // checkboxSelection
-          components
-        />
-      </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>#</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Author</TableCell>
+              <TableCell align="right">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {allUsers.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell component="th" scope="row">
+                  {item.id}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {item.title}
+                </TableCell>
+                <TableCell>{item.author}</TableCell>
+                <TableCell align="right">
+                  <ButtonGroup variant="" aria-label=" button group">
+                    <Button onClick={(e) => deleteUser(item.id)}>
+                      <DeleteOutlineOutlinedIcon />
+                    </Button>
+                    <Button>
+                      <EditOutlinedIcon />
+                    </Button>
+                    <Button>
+                      {true ? (
+                        <CheckCircleOutlineOutlinedIcon />
+                      ) : (
+                        <BlockOutlinedIcon />
+                      )}
+                    </Button>
+                  </ButtonGroup>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 };

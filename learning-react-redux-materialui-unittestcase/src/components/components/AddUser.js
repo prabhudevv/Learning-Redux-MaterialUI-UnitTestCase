@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { setInputValue } from "../../store/actions/userActions";
+import { setInputValue, resetUserData } from "../../store/actions/userActions";
 import { postService } from "../../axios/axios";
-import { resetUserData } from "../../store/actions/userActions";
 import { useNavigate } from "react-router-dom";
 
 const AddUser = () => {

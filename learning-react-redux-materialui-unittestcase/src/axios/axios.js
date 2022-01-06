@@ -22,3 +22,6 @@ export const getService = (baseUrlType, url) =>
 
 export const postService = (baseUrlType, url, body) =>
   axios.post(urls[baseUrlType] + url, body);
+
+export const deleteService = (baseUrlType, url, id) =>
+  axios.delete(urls[baseUrlType] + url, id);
