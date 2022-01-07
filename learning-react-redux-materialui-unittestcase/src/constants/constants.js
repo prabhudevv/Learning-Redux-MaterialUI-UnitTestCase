@@ -1,3 +1,10 @@
 export const PROJECT_TITLE = 'Learning React with Redux using MaterialUI & UnitTestCase';
 export const LEARN_REACT = 'Learning React';
 export const NO_RECORDS = 'No records found';
+export const DELETE_CONFIRM_MESSAGE = 'Do you really want to delete?';
+export const STATUS_CONFIRM_MESSAGE = 'Do you really want to update the status?';
+export const YES = 'Yes';
+export const NO = 'No';
+export const TITLE = 'Title';
+export const AUTHOR = 'Author';
+export const ACTIONS = 'Actions';
