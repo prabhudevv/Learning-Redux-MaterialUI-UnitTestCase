@@ -8,3 +8,4 @@ export const NO = 'No';
 export const TITLE = 'Title';
 export const AUTHOR = 'Author';
 export const ACTIONS = 'Actions';
+export const INVALID_USERID = 'Invalid User ID';
