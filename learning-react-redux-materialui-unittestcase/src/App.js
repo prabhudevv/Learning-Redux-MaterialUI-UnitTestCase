@@ -14,7 +14,7 @@ const App = () => {
       <Navigation>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/adduser' element={<AddUser />} />
+          <Route path='/adduser/:userId' element={<AddUser />} />
         </Routes>
       </Navigation>
     </Router>

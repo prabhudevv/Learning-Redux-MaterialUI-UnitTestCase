@@ -5,6 +5,7 @@ const initialState = {
   newUserData: {
     title: "",
     author: "",
+    isActive: true
   },
 };
 
@@ -28,6 +29,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         newUserData: initialState.newUserData,
+      };
+    case types.SET_USER_DETAIL:
+      return {
+        ...state,
+        newUserData: action.payload,
       };
     default:
       return state;

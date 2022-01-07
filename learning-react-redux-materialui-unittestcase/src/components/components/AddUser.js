@@ -3,18 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { setInputValue, resetUserData } from "../../store/actions/userActions";
-import { postService } from "../../axios/axios";
-import { useNavigate } from "react-router-dom";
+import {
+  setInputValue,
+  resetUserData,
+  setUserDetail,
+} from "../../store/actions/userActions";
+import { postService, getService, putService } from "../../axios/axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let { userId } = useParams();
+
   const newUserData = useSelector((state) => state.user.newUserData);
   const { title, author } = newUserData;
+
   const onInputChange = (name, value) => {
     dispatch(setInputValue(name, value));
   };
+
   const handleSubmit = () => {
     postService("USER_SERVICE", "/users", newUserData)
       .then((res) => {
@@ -24,9 +32,35 @@ const AddUser = () => {
         console.log(err);
       });
   };
+
+  const handleUpdate = () => {
+    putService("USER_SERVICE", `/users/${userId}`, newUserData)
+      .then((res) => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getUserDetail = () => {
+    getService("USER_SERVICE", `/users/${userId}`)
+      .then((res) => {
+        dispatch(setUserDetail(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
-    dispatch(resetUserData());
+    if (userId === "0") {
+      dispatch(resetUserData());
+    } else {
+      getUserDetail();
+    }
   }, []);
+
   return (
     <>
       <Grid container spacing={1}>
@@ -54,9 +88,9 @@ const AddUser = () => {
           <Button
             variant="contained"
             size="large"
-            onClick={(e) => handleSubmit()}
+            onClick={(e) => (userId === "0" ? handleSubmit() : handleUpdate())}
           >
-            Submit
+            {userId === "0" ? "Submit" : "Update"}
           </Button>
         </Grid>
       </Grid>

@@ -11,7 +11,7 @@ export const items = [
   {
     label: "Add User",
     icon: <PersonAddIcon size="medium" />,
-    path: "/adduser",
+    path: "/adduser/0",
     aboveBreaker: true,
   },
 ];
