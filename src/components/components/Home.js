@@ -60,7 +60,6 @@ const useStyles = makeStyles({
 });
 
 const Home = () => {
-  const rows = [];
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,15 +79,6 @@ const Home = () => {
   const handleClose = () => setOpen(false);
 
   const allUsers = useSelector((state) => state.user.userData);
-
-  allUsers.map((item, idx) => {
-    rows.push({
-      title: item.title,
-      author: item.author,
-      isActive: item.isActive,
-      id: item.id,
-    });
-  });
 
   const deleteUser = (id) => {
     deleteService("USER_SERVICE", `/users/${id}`)
@@ -151,7 +141,7 @@ const Home = () => {
             </TableHead>
             <TableBody>
               {allUsers.map((item, idx) => (
-                <TableRow key={item.id}>
+                <TableRow key={idx}>
                   <TableCell component="th" scope="row">
                     {item.id}
                   </TableCell>
