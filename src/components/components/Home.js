@@ -84,6 +84,7 @@ const Home = () => {
     deleteService("USER_SERVICE", `/users/${id}`)
       .then((res) => {
         handleClose();
+        alert("success", "Successfully deleted user");
         getAllUsers();
       })
       .catch((err) => {
@@ -105,6 +106,7 @@ const Home = () => {
     putService("USER_SERVICE", `/users/${id}`, statusUpdateReq)
       .then((res) => {
         handleClose();
+        alert("success", "Successfully changed status");
         getAllUsers();
       })
       .catch((err) => {

@@ -28,6 +28,7 @@ const AddUser = () => {
   const handleSubmit = () => {
     postService("USER_SERVICE", "/users", newUserData)
       .then((res) => {
+        alert("success", "Successfully added new user");
         navigate("/");
       })
       .catch((err) => {
@@ -38,6 +39,7 @@ const AddUser = () => {
   const handleUpdate = () => {
     putService("USER_SERVICE", `/users/${userId}`, newUserData)
       .then((res) => {
+        alert("success", "Successfully updated new user");
         navigate("/");
       })
       .catch((err) => {
