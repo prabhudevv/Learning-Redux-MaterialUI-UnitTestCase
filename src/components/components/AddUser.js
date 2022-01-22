@@ -1,56 +1,77 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+
+import {
+  INVALID_USERID,
+  ADD_SUCCESS,
+  UPDATE_SUCCESS,
+} from "../../constants/constants";
+
 import {
   setInputValue,
   resetUserData,
   setUserDetail,
 } from "../../store/actions/userActions";
 import { postService, getService, putService } from "../../axios/axios";
-import { useNavigate, useParams } from "react-router-dom";
-import { INVALID_USERID } from "../../constants/constants";
+
+import Loader from "../Loader/Loader";
 
 const AddUser = () => {
   let { userId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [isValidId, setIsValidId] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     title: "",
-    author: ""
+    author: "",
   });
 
   const newUserData = useSelector((state) => state.user.newUserData);
   const { title, author } = newUserData;
 
-  const isDirty = title !== initialValues.title || author !== initialValues.author;
+  const isDirty =
+    title !== initialValues.title || author !== initialValues.author;
   const isInputFieldNotNull = title !== "" && author !== "";
 
-  const onInputChange = (name, value) => {
-    dispatch(setInputValue(name, value));
-  };
+  useEffect(() => {
+    if (userId === "0") {
+      dispatch(resetUserData());
+    } else {
+      setLoading(true);
+      getUserDetail();
+    }
+  }, []);
 
   const handleSubmit = () => {
+    setLoading(true);
     postService("USER_SERVICE", "/users", newUserData)
       .then((res) => {
-        alert("success", "Successfully added new user");
+        alert("success", ADD_SUCCESS);
         navigate("/");
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   };
 
   const handleUpdate = () => {
+    setLoading(true);
     putService("USER_SERVICE", `/users/${userId}`, newUserData)
       .then((res) => {
-        alert("success", "Successfully updated new user");
+        alert("success", UPDATE_SUCCESS);
         navigate("/");
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   };
 
@@ -59,19 +80,17 @@ const AddUser = () => {
       .then((res) => {
         dispatch(setUserDetail(res.data));
         setInitialValues(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         setIsValidId(false);
+        setLoading(false);
       });
   };
 
-  useEffect(() => {
-    if (userId === "0") {
-      dispatch(resetUserData());
-    } else {
-      getUserDetail();
-    }
-  }, []);
+  const onInputChange = (name, value) => {
+    dispatch(setInputValue(name, value));
+  };
 
   return (
     <>
@@ -113,6 +132,7 @@ const AddUser = () => {
       ) : (
         <h5>{INVALID_USERID}</h5>
       )}
+      {loading ? <Loader /> : <></>}
     </>
   );
 };

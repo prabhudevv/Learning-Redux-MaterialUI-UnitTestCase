@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import { SPACING } from "../../constants/styleGuide";
-import { WHITE } from "../../constants/colors";
+
+// MUI Icons
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
+
 import {
   NO_RECORDS,
   DELETE_CONFIRM_MESSAGE,
@@ -11,19 +18,11 @@ import {
   TITLE,
   AUTHOR,
   ACTIONS,
+  DELETE_SUCCESS,
+  STATUS_SUCCESS,
 } from "../../constants/constants";
-import { getService, deleteService, putService } from "../../axios/axios";
-import { setUserData } from "../../store/actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-// MUI Icons
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
-
-import Loader from "../Loader/Loader";
+import { SPACING } from "../../constants/styleGuide";
+import { WHITE } from "../../constants/colors";
 
 // MUI Components
 import {
@@ -40,6 +39,11 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
+
+import { getService, deleteService, putService } from "../../axios/axios";
+import { setUserData } from "../../store/actions/userActions";
+
+import Loader from "../Loader/Loader";
 
 const useStyles = makeStyles({
   modalStyle: {
@@ -65,42 +69,18 @@ const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [modalId, setModalId] = useState("");
   const [modalType, setModalType] = useState("");
   const [modalIdx, setModalIdx] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [open, setOpen] = useState(false);
-
-  const handleOpen = (id, idx, type) => {
-    setModalId(id);
-    setModalType(type);
-    setModalIdx(idx);
-    setOpen(true);
-  };
-
-  const handleClose = () => setOpen(false);
 
   const allUsers = useSelector((state) => state.user.userData);
 
-  const deleteUser = (id) => {
-    setLoading(true);
-    deleteService("USER_SERVICE", `/users/${id}`)
-      .then((res) => {
-        handleClose();
-        alert("success", "Successfully deleted user");
-        getAllUsers();
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("deleted fail");
-        setLoading(false);
-      });
-  };
-
-  const editUser = (id) => {
-    navigate(`/adduser/${id}`);
-  };
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   const statusUpdate = (id, idx) => {
     setLoading(true);
@@ -113,7 +93,22 @@ const Home = () => {
     putService("USER_SERVICE", `/users/${id}`, statusUpdateReq)
       .then((res) => {
         handleClose();
-        alert("success", "Successfully changed status");
+        alert("success", STATUS_SUCCESS);
+        getAllUsers();
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+  const deleteUser = (id) => {
+    setLoading(true);
+    deleteService("USER_SERVICE", `/users/${id}`)
+      .then((res) => {
+        handleClose();
+        alert("success", DELETE_SUCCESS);
         getAllUsers();
         setLoading(false);
       })
@@ -136,9 +131,18 @@ const Home = () => {
       });
   };
 
-  useEffect(() => {
-    getAllUsers();
-  }, []);
+  const handleOpen = (id, idx, type) => {
+    setModalId(id);
+    setModalType(type);
+    setModalIdx(idx);
+    setOpen(true);
+  };
+
+  const editUser = (id) => {
+    navigate(`/adduser/${id}`);
+  };
+
+  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -228,7 +232,7 @@ const Home = () => {
           </div>
         </Box>
       </Modal>
-      {loading ? <Loader/> : <></>}
+      {loading ? <Loader /> : <></>}
     </>
   );
 };
