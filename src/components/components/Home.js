@@ -23,6 +23,8 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 
+import Loader from "../Loader/Loader";
+
 // MUI Components
 import {
   Box,
@@ -66,6 +68,7 @@ const Home = () => {
   const [modalId, setModalId] = useState("");
   const [modalType, setModalType] = useState("");
   const [modalIdx, setModalIdx] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -81,14 +84,17 @@ const Home = () => {
   const allUsers = useSelector((state) => state.user.userData);
 
   const deleteUser = (id) => {
+    setLoading(true);
     deleteService("USER_SERVICE", `/users/${id}`)
       .then((res) => {
         handleClose();
         alert("success", "Successfully deleted user");
         getAllUsers();
+        setLoading(false);
       })
       .catch((err) => {
         console.log("deleted fail");
+        setLoading(false);
       });
   };
 
@@ -97,6 +103,7 @@ const Home = () => {
   };
 
   const statusUpdate = (id, idx) => {
+    setLoading(true);
     debugger;
     const statusUpdateReq = {
       title: allUsers[idx].title,
@@ -108,19 +115,24 @@ const Home = () => {
         handleClose();
         alert("success", "Successfully changed status");
         getAllUsers();
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   };
 
   const getAllUsers = () => {
+    setLoading(true);
     getService("USER_SERVICE", "/users")
       .then((res) => {
         dispatch(setUserData(res.data));
+        setLoading(false);
       })
       .catch((err) => {
         dispatch(setUserData(err));
+        setLoading(false);
       });
   };
 
@@ -216,6 +228,7 @@ const Home = () => {
           </div>
         </Box>
       </Modal>
+      {loading ? <Loader/> : <></>}
     </>
   );
 };
