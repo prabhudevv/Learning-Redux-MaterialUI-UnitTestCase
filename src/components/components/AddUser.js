@@ -17,9 +17,16 @@ const AddUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isValidId, setIsValidId] = useState(true);
+  const [initialValues, setInitialValues] = useState({
+    title: "",
+    author: ""
+  });
 
   const newUserData = useSelector((state) => state.user.newUserData);
   const { title, author } = newUserData;
+
+  const isDirty = title !== initialValues.title || author !== initialValues.author;
+  const isInputFieldNotNull = title !== "" && author !== "";
 
   const onInputChange = (name, value) => {
     dispatch(setInputValue(name, value));
@@ -51,6 +58,7 @@ const AddUser = () => {
     getService("USER_SERVICE", `/users/${userId}`)
       .then((res) => {
         dispatch(setUserDetail(res.data));
+        setInitialValues(res.data);
       })
       .catch((err) => {
         setIsValidId(false);
@@ -93,6 +101,7 @@ const AddUser = () => {
             <Button
               variant="contained"
               size="large"
+              disabled={!isDirty || !isInputFieldNotNull}
               onClick={(e) =>
                 userId === "0" ? handleSubmit() : handleUpdate()
               }

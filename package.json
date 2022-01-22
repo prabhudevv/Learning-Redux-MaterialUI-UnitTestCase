@@ -34,8 +34,10 @@
     "json-server": "json-server --watch db.json --port 3001",
     "start-dev": "concurrently \"npm start\" \"npm run json-server\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:ci": "react-scripts test --passWithNoTests --updateSnapshot",
+    "test:coverage": "npm run test:ci --coverage --colors --watchAll=false",
+    "test": "CI=true npm run test:ci"
   },
   "eslintConfig": {
     "extends": [
