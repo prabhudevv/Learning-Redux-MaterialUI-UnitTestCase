@@ -12,6 +12,9 @@ import {
   UPDATE_SUCCESS,
   FIRST_NAME,
   LAST_NAME,
+  EMAIL,
+  PASSWORD,
+  CONFIRM_PASSWORD,
   SUBMIT,
   UPDATE
 } from "../../constants/constants";
@@ -35,14 +38,18 @@ const AddUser = () => {
   const [initialValues, setInitialValues] = useState({
     firstName: "",
     lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
   });
 
   const newUserData = useSelector((state) => state.user.newUserData);
-  const { firstName, lastName } = newUserData;
+  const { firstName, lastName, email, password, confirmPassword } = newUserData;
 
   const isDirty =
-    firstName !== initialValues.firstName || lastName !== initialValues.lastName;
-  const isInputFieldNotNull = firstName !== "" && lastName !== "";
+    firstName !== initialValues.firstName || lastName !== initialValues.lastName || email !== initialValues.email || password !== initialValues.password || confirmPassword !== initialValues.confirmPassword;
+
+  const isInputFieldNotNull = firstName !== "" && lastName !== "" && email !== "" && password !== "" && confirmPassword !== "";
 
   useEffect(() => {
     if (userId === "0") {
@@ -116,6 +123,36 @@ const AddUser = () => {
               name="lastName"
               value={lastName}
               label={LAST_NAME}
+              variant="outlined"
+              onChange={(e) => onInputChange(e.target.name, e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={2} md={2}>
+            <TextField
+              id="outlined-basic"
+              name="email"
+              value={email}
+              label={EMAIL}
+              variant="outlined"
+              onChange={(e) => onInputChange(e.target.name, e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={2} md={2}>
+            <TextField
+              id="outlined-basic"
+              name="password"
+              value={password}
+              label={PASSWORD}
+              variant="outlined"
+              onChange={(e) => onInputChange(e.target.name, e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={2} md={2}>
+            <TextField
+              id="outlined-basic"
+              name="confirmPassword"
+              value={confirmPassword}
+              label={CONFIRM_PASSWORD}
               variant="outlined"
               onChange={(e) => onInputChange(e.target.name, e.target.value)}
             />

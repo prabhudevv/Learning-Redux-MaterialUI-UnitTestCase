@@ -17,6 +17,7 @@ import {
   NO,
   FIRST_NAME,
   LAST_NAME,
+  EMAIL,
   ACTIONS,
   DELETE_SUCCESS,
   STATUS_SUCCESS,
@@ -89,6 +90,7 @@ const Home = () => {
       firstName: allUsers[idx].firstName,
       lastName: allUsers[idx].lastName,
       isActive: !allUsers[idx].isActive,
+      email: allUsers[idx].email
     };
     putService("USER_SERVICE", `/users/${id}`, statusUpdateReq)
       .then((res) => {
@@ -154,6 +156,7 @@ const Home = () => {
                 <TableCell>#</TableCell>
                 <TableCell>{FIRST_NAME}</TableCell>
                 <TableCell>{LAST_NAME}</TableCell>
+                <TableCell>{EMAIL}</TableCell>
                 <TableCell align="right">{ACTIONS}</TableCell>
               </TableRow>
             </TableHead>
@@ -167,6 +170,9 @@ const Home = () => {
                     {item.firstName}
                   </TableCell>
                   <TableCell>{item.lastName}</TableCell>
+                  <TableCell component="th" scope="row">
+                    {item.email}
+                  </TableCell>
                   <TableCell align="right">
                     <ButtonGroup variant="" aria-label=" button group">
                       <Button

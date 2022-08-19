@@ -5,7 +5,10 @@ const initialState = {
   newUserData: {
     firstName: "",
     lastName: "",
-    isActive: true
+    isActive: true,
+    email: "",
+    password: "",
+    confirmPassword: ""
   },
 };
 
