@@ -1,21 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import "./App.css";
 
-import alert from "./components/HotToaster/HotToaster";
 import Navigation from "./components/Navigation/Navigation";
-import Home from "./components/components/Home";
-import AddUser from "./components/components/AddUser";
+import RouteLinks from "./routes/RouteLinks";
 
 const App = () => {
   return (
     <Router>
       <Navigation>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/adduser/:userId" element={<AddUser />} />
-        </Routes>
+        <RouteLinks />
         <Toaster position="bottom-right" />
       </Navigation>
     </Router>
