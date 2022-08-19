@@ -10,6 +10,10 @@ import {
   INVALID_USERID,
   ADD_SUCCESS,
   UPDATE_SUCCESS,
+  FIRST_NAME,
+  LAST_NAME,
+  SUBMIT,
+  UPDATE
 } from "../../constants/constants";
 
 import {
@@ -29,16 +33,16 @@ const AddUser = () => {
   const [isValidId, setIsValidId] = useState(true);
   const [loading, setLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
-    title: "",
-    author: "",
+    firstName: "",
+    lastName: "",
   });
 
   const newUserData = useSelector((state) => state.user.newUserData);
-  const { title, author } = newUserData;
+  const { firstName, lastName } = newUserData;
 
   const isDirty =
-    title !== initialValues.title || author !== initialValues.author;
-  const isInputFieldNotNull = title !== "" && author !== "";
+    firstName !== initialValues.firstName || lastName !== initialValues.lastName;
+  const isInputFieldNotNull = firstName !== "" && lastName !== "";
 
   useEffect(() => {
     if (userId === "0") {
@@ -99,9 +103,9 @@ const AddUser = () => {
           <Grid item xs={2} md={2}>
             <TextField
               id="outlined-basic"
-              name="title"
-              value={title}
-              label="Title"
+              name="firstName"
+              value={firstName}
+              label={FIRST_NAME}
               variant="outlined"
               onChange={(e) => onInputChange(e.target.name, e.target.value)}
             />
@@ -109,9 +113,9 @@ const AddUser = () => {
           <Grid item xs={2} md={2}>
             <TextField
               id="outlined-basic"
-              name="author"
-              value={author}
-              label="Author"
+              name="lastName"
+              value={lastName}
+              label={LAST_NAME}
               variant="outlined"
               onChange={(e) => onInputChange(e.target.name, e.target.value)}
             />
@@ -125,7 +129,7 @@ const AddUser = () => {
                 userId === "0" ? handleSubmit() : handleUpdate()
               }
             >
-              {userId === "0" ? "Submit" : "Update"}
+              {userId === "0" ? SUBMIT : UPDATE}
             </Button>
           </Grid>
         </Grid>

@@ -3,8 +3,8 @@ import types from "../types/userActionTypes";
 const initialState = {
   userData: [],
   newUserData: {
-    title: "",
-    author: "",
+    firstName: "",
+    lastName: "",
     isActive: true
   },
 };

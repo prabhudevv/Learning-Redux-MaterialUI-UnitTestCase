@@ -15,8 +15,8 @@ import {
   STATUS_CONFIRM_MESSAGE,
   YES,
   NO,
-  TITLE,
-  AUTHOR,
+  FIRST_NAME,
+  LAST_NAME,
   ACTIONS,
   DELETE_SUCCESS,
   STATUS_SUCCESS,
@@ -86,8 +86,8 @@ const Home = () => {
     setLoading(true);
     debugger;
     const statusUpdateReq = {
-      title: allUsers[idx].title,
-      author: allUsers[idx].author,
+      firstName: allUsers[idx].firstName,
+      lastName: allUsers[idx].lastName,
       isActive: !allUsers[idx].isActive,
     };
     putService("USER_SERVICE", `/users/${id}`, statusUpdateReq)
@@ -152,8 +152,8 @@ const Home = () => {
             <TableHead>
               <TableRow>
                 <TableCell>#</TableCell>
-                <TableCell>{TITLE}</TableCell>
-                <TableCell>{AUTHOR}</TableCell>
+                <TableCell>{FIRST_NAME}</TableCell>
+                <TableCell>{LAST_NAME}</TableCell>
                 <TableCell align="right">{ACTIONS}</TableCell>
               </TableRow>
             </TableHead>
@@ -164,9 +164,9 @@ const Home = () => {
                     {item.id}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {item.title}
+                    {item.firstName}
                   </TableCell>
-                  <TableCell>{item.author}</TableCell>
+                  <TableCell>{item.lastName}</TableCell>
                   <TableCell align="right">
                     <ButtonGroup variant="" aria-label=" button group">
                       <Button

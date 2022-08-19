@@ -1,5 +1,3 @@
-import Toastr from "react-hot-toast";
-
 export default alert = (type, msg) => {
   switch (type) {
     case "info":
