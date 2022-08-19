@@ -5,6 +5,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
+// Datepicker
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import {
   INVALID_USERID,
@@ -15,6 +23,9 @@ import {
   EMAIL,
   PASSWORD,
   CONFIRM_PASSWORD,
+  MALE,
+  FEMALE,
+  MOBILE_NUMBER,
   SUBMIT,
   UPDATE
 } from "../../constants/constants";
@@ -40,16 +51,19 @@ const AddUser = () => {
     lastName: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    gender: "",
+    dob: "",
+    mobileNumber: ""
   });
 
   const newUserData = useSelector((state) => state.user.newUserData);
-  const { firstName, lastName, email, password, confirmPassword } = newUserData;
+  const { firstName, lastName, email, password, confirmPassword, gender, dob, mobileNumber } = newUserData;
 
   const isDirty =
-    firstName !== initialValues.firstName || lastName !== initialValues.lastName || email !== initialValues.email || password !== initialValues.password || confirmPassword !== initialValues.confirmPassword;
+    firstName !== initialValues.firstName || lastName !== initialValues.lastName || email !== initialValues.email || password !== initialValues.password || confirmPassword !== initialValues.confirmPassword || gender !== initialValues.gender || dob !== initialValues.dob || mobileNumber !== initialValues.mobileNumber;
 
-  const isInputFieldNotNull = firstName !== "" && lastName !== "" && email !== "" && password !== "" && confirmPassword !== "";
+  const isInputFieldNotNull = firstName !== "" && lastName !== "" && email !== "" && password !== "" && confirmPassword !== "" && gender !== "" && dob !== "" && mobileNumber !== "";
 
   useEffect(() => {
     if (userId === "0") {
@@ -103,6 +117,10 @@ const AddUser = () => {
     dispatch(setInputValue(name, value));
   };
 
+  const dateChange = (value) => {
+    dispatch(setInputValue('dob', value));
+  };
+
   return (
     <>
       {isValidId ? (
@@ -153,6 +171,51 @@ const AddUser = () => {
               name="confirmPassword"
               value={confirmPassword}
               label={CONFIRM_PASSWORD}
+              variant="outlined"
+              onChange={(e) => onInputChange(e.target.name, e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={2} md={2}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DesktopDatePicker
+                label="Date desktop"
+                inputFormat="dd/MM/yyyy"
+                value={dob}
+                name={dob}
+                onChange={dateChange}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={2} md={2}>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              name="radio-buttons-group"
+            >
+              <FormControlLabel
+                name="gender"
+                value={MALE}
+                control={<Radio />}
+                label={MALE}
+                checked={(gender === MALE) ? true : false}
+                onChange={(e) => onInputChange(e.target.name, e.target.value)}
+              />
+              <FormControlLabel
+                name="gender"
+                value={FEMALE}
+                control={<Radio />}
+                label={FEMALE}
+                checked={(gender === FEMALE) ? true : false}
+                onChange={(e) => onInputChange(e.target.name, e.target.value)}
+              />
+            </RadioGroup>
+          </Grid>
+          <Grid item xs={2} md={2}>
+            <TextField
+              id="outlined-basic"
+              name="mobileNumber"
+              value={mobileNumber}
+              label={MOBILE_NUMBER}
               variant="outlined"
               onChange={(e) => onInputChange(e.target.name, e.target.value)}
             />

@@ -8,7 +8,10 @@ const initialState = {
     isActive: true,
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    gender: "",
+    dob: new Date(),
+    mobileNumber: ""
   },
 };
 

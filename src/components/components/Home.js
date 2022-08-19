@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
+import moment from "moment";
 
 // MUI Icons
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -18,9 +19,12 @@ import {
   FIRST_NAME,
   LAST_NAME,
   EMAIL,
+  GENDER,
   ACTIONS,
   DELETE_SUCCESS,
   STATUS_SUCCESS,
+  DOB,
+  MOBILE_NUMBER
 } from "../../constants/constants";
 import { SPACING } from "../../constants/styleGuide";
 import { WHITE } from "../../constants/colors";
@@ -90,7 +94,10 @@ const Home = () => {
       firstName: allUsers[idx].firstName,
       lastName: allUsers[idx].lastName,
       isActive: !allUsers[idx].isActive,
-      email: allUsers[idx].email
+      email: allUsers[idx].email,
+      gender: allUsers[idx].gender,
+      dob: allUsers[idx].dob,
+      mobileNumber: allUsers[idx].mobileNumber
     };
     putService("USER_SERVICE", `/users/${id}`, statusUpdateReq)
       .then((res) => {
@@ -157,6 +164,9 @@ const Home = () => {
                 <TableCell>{FIRST_NAME}</TableCell>
                 <TableCell>{LAST_NAME}</TableCell>
                 <TableCell>{EMAIL}</TableCell>
+                <TableCell>{GENDER}</TableCell>
+                <TableCell>{DOB}</TableCell>
+                <TableCell>{MOBILE_NUMBER}</TableCell>
                 <TableCell align="right">{ACTIONS}</TableCell>
               </TableRow>
             </TableHead>
@@ -172,6 +182,15 @@ const Home = () => {
                   <TableCell>{item.lastName}</TableCell>
                   <TableCell component="th" scope="row">
                     {item.email}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {item.gender}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {moment(item.dob).format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {item.mobileNumber}
                   </TableCell>
                   <TableCell align="right">
                     <ButtonGroup variant="" aria-label=" button group">
