@@ -78,11 +78,9 @@ const AddUser = () => {
     setLoading(true);
     postService("USER_SERVICE", "/users", newUserData)
       .then((res) => {
-        alert("success", ADD_SUCCESS);
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   };
@@ -91,11 +89,9 @@ const AddUser = () => {
     setLoading(true);
     putService("USER_SERVICE", `/users/${userId}`, newUserData)
       .then((res) => {
-        alert("success", UPDATE_SUCCESS);
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   };

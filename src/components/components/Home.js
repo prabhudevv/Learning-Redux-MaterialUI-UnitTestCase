@@ -102,12 +102,10 @@ const Home = () => {
     putService("USER_SERVICE", `/users/${id}`, statusUpdateReq)
       .then((res) => {
         handleClose();
-        alert("success", STATUS_SUCCESS);
         getAllUsers();
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   };
@@ -117,12 +115,10 @@ const Home = () => {
     deleteService("USER_SERVICE", `/users/${id}`)
       .then((res) => {
         handleClose();
-        alert("success", DELETE_SUCCESS);
         getAllUsers();
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   };
