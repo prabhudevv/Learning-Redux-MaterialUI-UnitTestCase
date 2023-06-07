@@ -16,8 +16,6 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import {
   INVALID_USERID,
-  ADD_SUCCESS,
-  UPDATE_SUCCESS,
   FIRST_NAME,
   LAST_NAME,
   EMAIL,

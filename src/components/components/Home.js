@@ -21,8 +21,6 @@ import {
   EMAIL,
   GENDER,
   ACTIONS,
-  DELETE_SUCCESS,
-  STATUS_SUCCESS,
   DOB,
   MOBILE_NUMBER
 } from "../../constants/constants";
@@ -168,7 +166,7 @@ const Home = () => {
             </TableHead>
             <TableBody>
               {allUsers.map((item, idx) => (
-                <TableRow key={idx}>
+                <TableRow key={item.id}>
                   <TableCell component="th" scope="row">
                     {item.id}
                   </TableCell>
