@@ -1,16 +1,1 @@
-{
-  "users": [
-    {
-      "firstName": "Jyotsna",
-      "lastName": "Kumbar",
-      "isActive": true,
-      "email": "jyotsna@gmail.com",
-      "password": "bnv",
-      "confirmPassword": "abcd@1234",
-      "gender": "Female",
-      "dob": "2023-06-07T15:41:36.774Z",
-      "mobileNumber": "8904317204",
-      "id": 2
-    }
-  ]
-}
+{}
